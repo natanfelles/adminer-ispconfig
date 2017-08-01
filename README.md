@@ -1,4 +1,4 @@
-# Adminer Ispconfig Plugin
+# Adminer ISPConfig Plugin
 
 Authenticate and auto-check host by ISPConfig Remote API
 
