@@ -79,7 +79,15 @@ class AdminerISPConfig
 
             return $server[1]['hostname'];
         } catch (SoapFault $e) {
-            die('SOAP Error: ' . $e->getMessage());
+            page_header(lang('Login'), 'SOAP Error: ' . $e->getMessage(), null);
+            echo "<form action='' method='post'>\n";
+            $this->loginForm();
+            echo "<div>";
+            hidden_fields($_POST, array("auth")); // expired session
+            echo "</div>\n";
+            echo "</form>\n";
+            page_footer("auth");
+            exit;
         }
     }
 
