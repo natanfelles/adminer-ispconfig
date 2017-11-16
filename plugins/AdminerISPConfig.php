@@ -73,7 +73,7 @@ class AdminerISPConfig
                 'database_user' => h($_GET["username"]),
             ]);
 
-            $server = $client->server_get($session_id, $web_database_user['server_id'], $section = 'server');
+            $server = $client->server_get($session_id, $web_database_user['server_id'], 'server');
 
             $client->logout($session_id);
 
