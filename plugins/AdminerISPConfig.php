@@ -38,7 +38,7 @@ class AdminerISPConfig
 
     function credentials()
     {
-        return array($this->get_server(), $_GET["username"], get_password());
+        return array($this->get_server(), $_GET["username"], Adminer\get_password());
     }
 
 
@@ -70,7 +70,7 @@ class AdminerISPConfig
             $session_id = $client->login($this->username, $this->password);
 
             $web_database_user = $client->sites_database_user_get($session_id, [
-                'database_user' => h($_GET["username"]),
+                'database_user' => Adminer\h($_GET["username"]),
             ]);
 
             $server = $client->server_get($session_id, $web_database_user['server_id'], 'server');
@@ -79,14 +79,14 @@ class AdminerISPConfig
 
             return $server[1]['hostname'];
         } catch (SoapFault $e) {
-            page_header(lang('Login'), 'SOAP Error: ' . $e->getMessage(), null);
+            Adminer\page_header(Adminer\lang('Login'), 'SOAP Error: ' . $e->getMessage(), null);
             echo "<form action='' method='post'>\n";
             $this->loginForm();
             echo "<div>";
-            hidden_fields($_POST, array("auth")); // expired session
+            Adminer\hidden_fields($_POST, array("auth")); // expired session
             echo "</div>\n";
             echo "</form>\n";
-            page_footer("auth");
+            Adminer\page_footer("auth");
             exit;
         }
     }
@@ -98,16 +98,16 @@ class AdminerISPConfig
             <table>
                 <input type="hidden" name="auth[driver]" value="server">
                 <tr>
-                    <th><?php echo lang('Username'); ?>
+                    <th><?php echo Adminer\lang('Username'); ?>
                     <td>
-                        <input id="username" name="auth[username]" value="<?php echo h($_GET["username"]); ?>">
+                        <input id="username" name="auth[username]" value="<?php echo Adminer\h($_GET["username"]); ?>">
                 <tr>
-                    <th><?php echo lang('Password'); ?>
+                    <th><?php echo Adminer\lang('Password'); ?>
                     <td><input type="password" name="auth[password]">
             </table>
-            <p><input type="submit" value="<?php echo lang('Login'); ?>">
+            <p><input type="submit" value="<?php echo Adminer\lang('Login'); ?>">
                 <?php
-                echo checkbox("auth[permanent]", 1, $_COOKIE["adminer_permanent"], lang('Permanent login')) . "\n";
+                echo Adminer\checkbox("auth[permanent]", 1, $_COOKIE["adminer_permanent"], Adminer\lang('Permanent login')) . "\n";
                 ?>
         </div>
         <?php
